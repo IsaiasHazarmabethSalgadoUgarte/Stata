@@ -1,0 +1,54 @@
+Twice procedure for 4353eh non linear smoother                 [STB-11: sed7.2]
+Version 1.0 for Stata 3.0
+----------------------------------------------
+             
+	^smtwice^ datavar smthvar finsmth
+
+
+Description
+-----------
+
+^smtwice^ calcules rough from 4253eh, smoothes rough values and add the result
+to smthvar to produce finsmth (final smoothed values by 4253eh,twice).
+^finrough^ is created to assess the model, ^timendx^ is created to serve as 
+an index for the graph that appears on screen once the calculations have 
+finished. The numerical results can be recalled by the list command.
+
+
+Example
+-------
+
+ . ^smtwice raw smooth smootwce^
+
+the graph of observed and smooth twiced values vs. timendx appears on screen
+
+ . ^list^
+
+the numerical results of the twicing are showed on screen
+
+
+References
+----------
+
+Salgado-Ugarte, I. H., & J. Curts-García (1992) sed7: Resistant smoothing using 
+         Stata. Stata Technical Bulletin 7: 8–11. Reimpreso en Stata Technical 
+	 Bulletin Reprints, vol. 2, pp. 99–103. College Station, TX: Stata Press.
+Salgado-Ugarte, I.H. & J. Curts-García (1993) sed7.2: Twice reroughing 
+         procedure for resistant nonlinear smoothing. Stata Technical Bulletin 
+	 11: 14–16. Reimpreso en Stata Technical Bulletin Reprints, vol. 2, 
+	 pp. 108–111. College Station, TX: Stata Press.
+
+	 
+Authors
+-------
+
+Isaias H. Salgado-Ugarte, University of Tokyo, Faculty of Agriculture, 
+Dept. of Fisheries (Fax 81-3-3812-0529) and Jaime Curts Garcia, Dir. Gral. de 
+Planeacion, Evaluacion y Proyectos Academicos, U.N.A.M., Mexico City, Mexico.
+Fax (52-5-665-0943)  
+
+Also see
+--------
+    STB:  sed7 (STB-7); sed7.2 (STB-11)
+On-line: help for ^sm4253eh^
+

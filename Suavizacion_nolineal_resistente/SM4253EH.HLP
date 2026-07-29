@@ -1,0 +1,47 @@
+Resistant non linear smoother. Version 1.0 for Stata 3.0       [STB-7: sed7]
+	Version 2.0 for Stata 3.0			    [STB-11: sed7.2]
+---------------------------------------------------------------------------
+             
+	^sm4253eh^ datavar smthvar
+
+
+Description
+-----------
+
+^sm4253eh^ smoothes datavar to produce smthvar.  dtavar is dropped.  The variable
+^timendx^ is created to serve as an index for graphing.
+
+
+Example
+-------
+
+ . ^sm4253eh raw smooth^
+ . ^graph smooth timendx^
+
+
+References
+----------
+
+Salgado-Ugarte, I. H., & J. Curts-García (1992) sed7: Resistant smoothing using 
+         Stata. Stata Technical Bulletin 7: 8–11. Reimpreso en Stata Technical 
+	 Bulletin Reprints, vol. 2, pp. 99–103. College Station, TX: Stata Press.
+Salgado-Ugarte, I.H. & J. Curts-García (1993) sed7.2: Twice reroughing 
+         procedure for resistant nonlinear smoothing. Stata Technical Bulletin 
+	 11: 14–16. Reimpreso en Stata Technical Bulletin Reprints, vol. 2, 
+	 pp. 108–111. College Station, TX: Stata Press.
+
+
+Authors
+-------
+
+Isaias H. Salgado-Ugarte, University of Tokyo, Faculty of Agriculture, 
+Dept. of Fisheries (Fax 81-3-3812-0529) and Jaime Curts Garcia, Dir. Gral. de 
+Planeacion, Evaluacion y Proyectos Academicos, U.N.A.M., Mexico City, Mexico.
+Fax (52-5-665-0943)  
+
+Also see
+--------
+
+    STB:  sed7 (STB-7); sed7.2 (STB-11)
+On-line: help for ^smtwice^
+
