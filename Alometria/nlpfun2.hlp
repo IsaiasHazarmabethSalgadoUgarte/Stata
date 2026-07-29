@@ -1,0 +1,155 @@
+-------------------------------------------------------------------------------
+help for ^nl pfun2^                                                     
+-------------------------------------------------------------------------------
+
+Nonlinear least squares VBGF parameter estimation
+-------------------------------------------------
+
+   ^nl pfun2^ yvar xvar [weight] [^if^ exp] [^in^ range]
+              [^, l^evel^(^#^)^ ^i^nit^(^...^)^ ^ln^lsq^(^#^)^ ^lea^ve ^eps(^#^)^
+              ^nolo^g ^tr^ace ^it^erate^(^#^)^ fcn_options ]
+
+
+yvar is the dependent variable with individual or mean body weight 
+     or length values.
+
+xvar is the independent variable with individual or mean weigth 
+     or length values.
+
+^aweights^ and ^fweight^s are allowed; see help ^weights^.
+
+^nl pfun2^ as being an application of ^nl^ shares the features of all estimation 
+   commands; see help ^est^.
+
+
+The syntax of ^predict^ following ^nl pfun2^ is
+
+   predict [type] newvarname [^if^ exp] [^in^ range] [, { ^y^hat | ^r^esiduals }]
+
+
+^yhat^ and ^residuals^ are available both in and out of sample; type "^predict^ ...
+^if e(sample)^ ..." if wanted only for the estimation sample.
+
+
+Description
+-----------
+
+This command uses Stata's nl programmed substitutable expresion to fit a 
+Potential Function to relate any pair of body measures (weight, length...) by 
+iterative least squares. The potential function is in the separate program 
+nlpfun2.ado. As an application of the nl procedure included in Stata, 
+the ^nl pfun2^ program shares all the options for ^nl^ (see help ^nl^). 
+It is the updated version of ^nl potfun^
+
+
+Options
+-------
+
+^level(^#^)^ specifies the confidence level, in percent, for confidence intervals
+    of the coefficients; see help ^level^.
+
+^init(^...^)^ specifies initial values for parameters that are to be used to over-
+    ride the default initial values.
+
+^lnlsq(^#^)^ fits the model defined in fcn by 'log least squares', defined as with
+    shifted lognormal errors. In other words, ln(depvar-#) is assumed normally
+    distributed. Sums of squares and deviance are adjusted to the same scale as
+    depvar.
+
+^leave^ leaves behind after estimation a set of new variables with the same names
+    as the estimated parameters containing the derivative of E(y) with respect
+    to the parameter.
+
+^eps(^#^)^ specifies the convergence criterion for successive parameter estimates
+    and for the residual sum of squares. Default: 1e-5 (.00001).
+
+^nolog^ suppresses the iteration log.
+
+^trace^ expands the iteration log to provide more details, including values of
+    the parameters at each step of the process.
+
+^iterate(^#^)^ specifies the maximum number of iterations before giving up and
+    defaults to 100.
+
+fcn_options refer to any options allowed by nlfcn.
+
+
+Options for ^predict^
+-------------------
+
+^yhat^, the default, calculates the fitted values.
+
+^residuals^ calculates the residuals.
+
+
+nlpfun2
+--------
+
+^nl pfun2^ uses the substitutable expression defined by nlpfun2.ado. In nlpfun2 the 
+parameters of the function and the set of default initial values are determined, 
+and it permits to evaluate the function for a given set of parameter estimates.
+
+The programmed substitutable expression nlfun2 is:
+
+^program nlpfun2, rclass
+*Authors: Salgado-Ugarte, I.H., V.M. Saito-Quezada
+*First written: 24/06/1999 (version 1.00)
+*Updated 01/06/2020; 01/04/2026
+   version 11.0
+   syntax varlist(min=2 max=2) [aw fw iw] if
+   local ye: word 1 of `varlist'
+   local equis: word 2 of `varlist'
+   return local eq "`ye'= {a=.1}*`equis'^{b=1}"
+   return local title "Potential function  `ye' = a*`equis'^b"
+end^
+
+
+Examples
+--------
+
+Having ^eviwei^ a variable with eviscerated weight at each ^bodlen^ (body length), 
+you type:
+
+^. nl pfun2: eviwei bodlen^
+
+Notice that the initial values of the parameters are provided in the nlpfun2
+programmed substitutable expression.  You can, however, override them.  To 
+estimate a model using 3 for the initial value of b rather than 1, you can type
+
+^. nl pfun2 eviwei bodlen, init(b 3)^
+
+To also change the initial value of a from 0.1 to 1, you type:
+
+^. nl pfun2 eviwei bodlen, init(b 3 a 1)^
+
+References
+----------
+
+   Salgado-Ugarte, I.H. & V.M. Saito-Quezada (2020). Métodos Cuantitativos 
+        Computarizados para Biología Pesquera. DGAPA y FES Zaragoza, UNAM
+        México: 487 p. 
+   Salgado-Ugarte, I.H., J. Martinez-Ramirez, J.L. Gomez-Marquez, & B. 
+        Pena-Mendoza (2000). Some programs for fisheries biology. Growth estimation
+        from length frequency analysis and hard parts reading. Stata 
+        Technical Bulletin 53: 35-47.
+   Sparre, P. and C.S. Venema (1992) Introduction to tropical fish stock 
+        assessment. Part I - Manual. FAO Fisheries Technical Paper 306/1
+        Rome, 376 pp.
+
+Author
+------
+
+Isaias Hazarmabeth Salgado-Ugarte y V. Mitsui Saito-Quezada 
+Laboratorio de Biometria y Biologia Pesquera
+Facultad de Estudios Superiores Zaragoza
+Universidad Nacional Autonoma de Mexico
+e-mail: isalgado@@unam.mx
+
+
+Also see
+--------
+
+ Manual:  ^[U] 23 Estimation and post-estimation commands^,
+          ^[U] 29 Overview of model estimation in Stata^,
+          ^[R] nl^
+On-line:  help for @nl@, @est@, @postest@, @ml@, @regress@ @nlpotfun@
