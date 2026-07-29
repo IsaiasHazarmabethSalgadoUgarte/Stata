@@ -1,0 +1,133 @@
+.-
+help for ^hotegf2^                                            [Stata Journal XX]
+.-
+
+Multivariate Hotelling test for growth comparison (Bonferroni CI´s) 
+-------------------------------------------------------------------
+
+     ^hotegf2^  S1 S2 P1 P2 N1 N2 CL
+
+
+S1 and S2 are the variance-covariance matrices for (three parameter) growth 
+	function (von Bertalanffy, Gomperz, Logistic) for each fish population
+
+P1 and P2 are the (three) parameter column vectors for each fish population
+
+N1 and N2 are the corresponding sample sizes
+
+CL is the desired confidence level (i.e. 99)
+
+Description
+-----------
+
+This program performs the multivariate test for comparing growth functions 
+(von Bertalanffy, Gomperz, Logistic), considering Hotelling's T^2 statistic
+(based on Bernard, D.R. 1981. Multivariate analysis as a means of 
+comparing growth in fish. Canadian Journal of Fisheries and Aquatic 
+Sciences, 38; 223-236). It displays a table with the results.
+This is the version with the Bonferroni inequalities for calculating the
+confidence intervals according to Headrick, M.R. & F.J. Margraf Jr. 1982, 
+
+Remarks
+-------
+
+
+All seven arguments must be entered in order to perform the test. The 
+required matrices may be entered or obtained by nl vbgf, nl gom3, or 
+nl log3. 
+
+This program uses corrected expressions from Bernard (1981) which has
+several misprints.
+
+
+Examples
+--------
+
+Inputting the matrices by hand:
+
+. ^matrix Sm = (294.74,-0.6018,-32.57\-.6018,.0013,.073\-32.57,.073,4.2296)^
+
+. ^matrix Sf = (1596.18,-1.1895,-91.05\-1.1895,.0009,.0713\-91.0468,.07,5.76)^
+
+. ^matrix Pm=(441.16,.13,-3.36)^
+
+. ^matrix Pf=(505.97,.09,-4.57)^
+
+. ^hotegfun Sm Sf Pm Pf 78 78 99^
+
+
+Obtaining matrices by nl vbgf
+
+. ^use kimudat.dta^
+
+. ^nl vbgf mbl age if sex==1^
+
+. ^matrix S1 = e(V)^
+
+. ^matrix P1 = e(b)^
+
+. ^display e(N)^
+11
+
+. ^nl vbgf mbl age if sex==2^
+
+. ^matrix S2 = e(V)^
+
+. ^matrix P2 = e(b)^
+
+. ^display e(N)^
+13
+
+. ^hotegfun S1 S2 P1 P2 86 78 99^
+
+
+
+References
+----------
+
+   Bernard, D.R. (1981) Multivariate analysis as a means of comparing growth in
+        fish. Canadian Journal of Fisheries and Aquatic Sciences, 38; 223-236.
+   Headrick, M.R. & F.J. Margraf Jr. 1982, Comment on Multivariate Analysis as 
+        a Means of Comparing Growth in Fish. Canadian Journal of Fisheries and 
+        Aquatic Sciences, 39(3): 529-530.
+   Ibanez-Aguirre, A.L., M. Gallardo-Cabello and X. Chiappa-Carrara (1999)
+        Growth analysis of striped mullet, Mugil cephalus, and white mullet,
+        M. curema (Pisces: Mugilidae), in the Gulf of Mexico. Fishery Bulletin
+        97: 861-872.
+   Morrison, D.F. (1976) Multivariate statistical methods. 2nd ed. McGraw-Hill
+        Book Company, New York, U.S.A. 415 p.
+   Salgado-Ugarte, I.H. (1995) Nonparametric methods for fisheries data 
+        analysis and their application in conjunction with other statistical 
+        techniques to study biological data of the Japanese sea bass 
+        Lateolabrax japonicus in Tokyo Bay. PhD on Aquatic Bioscience Thesis 
+        dissertation, Tokyo University, Japan. 389 p.
+   Salgado-Ugarte, I.H. & V.M. Saito-Quezada, 2020. Métodos Cuantitativos
+        Computarizados para Biología Pesquera. DGAPA-FES Zaragoza, UNAM,
+		México, 487 p.
+   Salgado-Ugarte, I.H., J. Martinez-Ramirez, J.L. Gomez-Marquez, and B. 
+        Pena-Mendoza (2000) sg128. Some programs for growth estimation in 
+        fisheries biology. Stata Technical Bulletin 53: 35-47.
+   Salgado-Ugarte, I.H., M.A. Perez-Hernandez, J.L. Gomez-Marquez and 
+        B. Pena-Mendoza (2003): Multivariate and likelihood tests for fish 
+        growth expression comparison. Stata Journal 
+
+
+Authors
+-------
+
+Isaias H. Salgado-Ugarte & V.M. Saito-Quezada
+Laboratorio de Biometría y Biología Pesquera
+Facultad de Estudios Superiores Zaragoza
+Universidad Nacional Autonoma de Mexico
+Batalla 5 de mayo S/N esq. Fuerte de Loreto
+Col. Ejercito de Oriente Iztapalapa 09230, 
+Ciudad de Mexico, Mexico
+(Fax 52-5-5773-6336)
+e-mail: isalgado@@unam.mx
+
+
+Also see
+--------
+
+    STB: sg128 (STB-53)
+On-line: ^help^ for @nl@, @nlvbgf@, @vblrtest@, @vbmltest@

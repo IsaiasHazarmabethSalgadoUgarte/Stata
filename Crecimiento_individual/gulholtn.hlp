@@ -1,0 +1,78 @@
+.-
+help for ^gulholtn^                                                      [STB-XX]
+.-
+
+Gulland-Holt method for von Bertalanffy growth function parameter estimation
+-----------------------------------------------------------------------------
+
+     ^gulholtn^  msizevar agevar [^if^ exp] [^in^ range]
+                [, ^nog^raph graph_options]
+
+
+Description
+-----------
+
+This program estimates L_infinite and K parameters of the von Bertalanffy 
+growth function using mean size (length) at age data according to the 
+procedure proposed by Gulland and Holt (1959). This ado file draws the linear 
+relationship used for the estimation and provides a table with the estimated 
+L_infinite and K parameters of the von Bertalanffy growth function.
+
+
+Options
+-------
+
+
+^nog^raph suppresses the graph drawing.
+
+graph_options are any of the options allowed with ^graph, twoway^.
+
+
+Remarks
+-------
+
+If the linear regression points do not have a slope less than zero, the 
+program halts and exits with an error message.
+
+
+Examples
+--------
+
+	. ^gulholtn mlength age^
+
+Will display the Gulland-Holt plot, a table with regression info, the values 
+for L_infinite and K parameters of the von Bertalanffy growth function.
+
+
+References
+----------
+   
+   Gomez-Marquez, J.L. (1994) Metodos para determinar la edad en los 
+        organismos acuaticos. (In Spanish). FES Zaragoza UNAM Mexico. 89 p.
+   Gulland, J.A. and S.J. Holt (1959) Estimation of growth parameters for 
+        data at unequal time intervals. Journal Counseil CIEM, 25(1): 47-9.
+   Salgado-Ugarte, I.H., J. Martinez-Ramirez, J.L. Gomez-Marquez, and B. 
+        Pena-Mendoza. Some programs for fisheries biology. Growth estimation
+        from length frequency analysis and hard parts reading. Stata 
+        Technical Bulletin 53: 34-45.
+   Sparre, P. and C.S. Venema (1992) Introduction to tropical fish stock 
+        assessment. Part I - Manual. FAO Fisheries Technical Paper 306/1
+        Rome, 376 pp.
+
+Authors
+-------
+
+Isaias Hazarmabeth Salgado-Ugarte y V. Mitsui Saito-Quezada 
+Laboratorio de Biometria y Biologia Pesquera
+Facultad de Estudios Superiores Zaragoza
+Universidad Nacional Autonoma de Mexico
+e-mail: isalgado@@unam.mx
+
+
+Also see
+--------
+
+    STB: snp6 (STB-16); sg23 (STB-18) snp6.1 (STB-26); snp6.2 (STB-27)
+         snp13 (STB-38); sg128 (STB-53)
+
+On-line: ^help^ for  @fordwal@, @gullplot@, @bevholt@, @nlvbgf@

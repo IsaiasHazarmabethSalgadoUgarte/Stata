@@ -1,0 +1,155 @@
+-------------------------------------------------------------------------------
+help for ^nl vbgf^                                                     [STB-XX]
+-------------------------------------------------------------------------------
+
+Nonlinear least squares VBGF parameter estimation
+-------------------------------------------------
+
+   ^nl vbgf^ sizevar agevar [weight] [^if^ exp] [^in^ range]
+              [^, l^evel^(^#^)^ ^i^nit^(^...^)^ ^ln^lsq^(^#^)^ ^lea^ve ^eps(^#^)^
+              ^nolo^g ^tr^ace ^it^erate^(^#^)^ fcn_options ]
+
+
+sizevar is the dependent variable with individual or mean size values.
+
+agevar is the independent variable with age for each size.
+
+^aweights^ and ^fweight^s are allowed; see help ^weights^.
+
+^nl vbgf^ as being an application of ^nl^ shares the features of all estimation 
+   commands; see help ^est^.
+
+
+The syntax of ^predict^ following ^nl vbgf^ is
+
+   predict [type] newvarname [^if^ exp] [^in^ range] [, { ^y^hat | ^r^esiduals }]
+
+
+^yhat^ and ^residuals^ are available both in and out of sample; type "^predict^ ...
+^if e(sample)^ ..." if wanted only for the estimation sample.
+
+
+Description
+-----------
+
+This command uses Stata's nl program to fit a von Bertalanffy Growth Function
+(VBGF) to the dependent variable wich is size or mean size by least squares. 
+The VBGF is in the separate program nlvbgf.ado. As an application of the nl
+procedure included in Stata, the ^nl vbgf^ program shares all the options for
+^nl^ (see help ^nl^).
+
+
+Options
+-------
+
+^level(^#^)^ specifies the confidence level, in percent, for confidence intervals
+    of the coefficients; see help ^level^.
+
+^init(^...^)^ specifies initial values for parameters that are to be used to over-
+    ride the default initial values.
+
+^lnlsq(^#^)^ fits the model defined in fcn by 'log least squares', defined as with
+    shifted lognormal errors. In other words, ln(depvar-#) is assumed normally
+    distributed. Sums of squares and deviance are adjusted to the same scale as
+    depvar.
+
+^leave^ leaves behind after estimation a set of new variables with the same names
+    as the estimated parameters containing the derivative of E(y) with respect
+    to the parameter.
+
+^eps(^#^)^ specifies the convergence criterion for successive parameter estimates
+    and for the residual sum of squares. Default: 1e-5 (.00001).
+
+^nolog^ suppresses the iteration log.
+
+^trace^ expands the iteration log to provide more details, including values of
+    the parameters at each step of the process.
+
+^iterate(^#^)^ specifies the maximum number of iterations before giving up and
+    defaults to 100.
+
+fcn_options refer to any options allowed by nlfcn.
+
+
+Options for ^predict^
+-------------------
+
+^yhat^, the default, calculates the fitted values.
+
+^residuals^ calculates the residuals.
+
+
+nlvbgf
+------
+
+^nl vbgf^ uses the function defined by nlvbgf.  In nlvbgf the parameters of the 
+problem and set default initial values are determined, and it permit to 
+evaluate the function for a given set of parameter estimates.
+
+The nlvbgf is:
+
+^program define nlvbgf
+   version 6.0
+      if "`1'"=="?"  {
+         global S_2 /*
+*/ "von Bertalanffy growth function, $S_E_depv=b0*(1-exp(-b1*(`2'-b2)))"
+         global S_1 "b0 b1 b2"
+         local exp "[$S_E_wgt $S_E_exp]"
+         global b0=500
+         global b1=1
+         global b2=0.1
+         exit
+      }
+      replace `1'= $b0*(1-exp(-$b1*(`2'-$b2)))
+end^
+
+
+Examples
+--------
+
+Having ^mlen^ a variable with mean size (or individual size) at each ^age^, 
+you type:
+
+^. nl vbgf mlen age^
+
+Notice that the initial values of the parameters were provided in the nlvbgf
+program.  You can, however, override them.  To estimate a model using 600 
+for the initial value of b0 (L_inf) rather than 500, you can type
+
+^. nl vbgf mlen age, init(b0 = 600)^
+
+To also change the initial value of b1 (K) from 1 to .5, and b2 (t_0) 
+from .1 to .2, you type:
+
+^. nl vbgf mlen age, init(b0 = 600, b1 = .5, b2 = 0.2)^
+
+References
+----------
+
+   Salgado-Ugarte, I.H., J. Martinez-Ramirez, J.L. Gomez-Marquez, and B. 
+        Pena-Mendoza. Some programs for fisheries biology. Growth estimation
+        from length frequency analysis and hard parts reading. Stata 
+        Technical Bulletin XX: XX-XX.
+   Sparre, P. and C.S. Venema (1992) Introduction to tropical fish stock 
+        assessment. Part I - Manual. FAO Fisheries Technical Paper 306/1
+        Rome, 376 pp.
+
+Author
+------
+
+Isaias H. Salgado-Ugarte
+Universidad Nacional Autonoma de Mexico
+Facultad de Estudios Superiores Zaragoza
+Biologia, Guelatao 66 Col. Ejercito de Oriente
+Iztapalapa 09230, Mexico D.F., Mexico
+(Fax 52-5-773-0151)
+e-mail: isalgado@@servidor.unam.mx
+
+
+Also see
+--------
+
+ Manual:  ^[U] 23 Estimation and post-estimation commands^,
+          ^[U] 29 Overview of model estimation in Stata^,
+          ^[R] nl^
+On-line:  help for @nl@, @est@, @postest@, @ml@, @regress@, @bevholt@
