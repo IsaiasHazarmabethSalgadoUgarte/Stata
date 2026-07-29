@@ -1,0 +1,33 @@
+Generate a Gaussian component                                   (STB-18: sg23)
+-----------------------------
+
+
+         ^gaussgen1^ midpoivar mean sd freq comgaufre
+
+^gaussgen1^ generates a new variable (comgaufre) that contains the estimated
+frequencies associated with the Gaussian component with mean="mean", standard
+deviation="sd", and cumulative frequency="freq".  ^bhatmesd^ will estimate
+these parameters using Bhattacharya's method.  The existing variable midpoivar
+contains the midpoints of the class intervals.  Type ^help bhatado^ for
+information on other ado-files used in applying Bhattacharya's method.
+
+
+
+Authors
+-------
+
+Isaias H. Salgado-Ugarte(1,2), Makoto Shimizu(1), Toru Taniuchi(1)
+and V. Mitsui Saito-Quezada(2)
+1) University of Tokyo, Faculty of Agriculture,
+Dept. of Fisheries, and
+2) Laboratorio de Biometria y Biologia Pesquera
+Facultad de Estudios Superiores Zaragoza
+Universidad Nacional Autonoma de Mexico
+isalgado@unam.mx
+
+
+Also see
+--------
+
+    STB: sg23 (STB-18)
+On-line: ^help^ for ^bhatado^, ^diflogen^, ^bhatplot^, ^bhataplt1^ and ^bhatmesd^.
