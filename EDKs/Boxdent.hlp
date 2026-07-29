@@ -1,0 +1,79 @@
+.-
+help for ^boxdent^                                           [STB-16: snp6]
+.-
+
+Density trace (boxcar weight function) updated               
+----------------------------------------------
+
+         ^boxdent^ varname [^if^ exp] [^in^ range],
+                  ^h^val^(^#^)^ [^g^en^(^denvar^)^ ^nog^raph graph_options]
+
+Description
+-----------
+This program calculates the density trace of "varname" using the boxcar weight 
+function described in Chambers et. al. (1983) and graph it.
+
+Options
+-------
+
+^h^val is a constant that specifies the width of the density window around
+each point.
+
+^g^en^(^denvar^)^ permits to generate a new variable containing the density trace. 
+
+^nog^raph suppresses the graph drawing.
+
+graph_options are any of the options allowed with ^graph, twoway^.
+
+Remarks
+-------
+
+This procedure can be regarded as a descriptive smoother of histograms.
+Indeed this simple density estimator is like a histogram using bins of the
+specified width but no fixed origin; the bin's windows run along the 
+series with each observation at its midpoint allowing overlap.
+The "smoothness" of the result can be regulated by changing the width of
+the interval. Wide intervals produce smooth results; narrow intervals
+result in noiser density values.
+
+WARNING: This procedure performs conditional summaries for every observation
+in the data set. Thus, the time it requires is proportional to the quantity 
+of data. Please be patient.
+
+Example
+-------
+
+  . ^boxdent ozone, h(75) gen(dtrace)^
+
+Calculates and displays a graph of the density trace.
+
+It is possible to draw the graphic with the generated results by typing:
+
+  . ^graph dtrace ozone^, xlab ylab c(l) s(p)
+
+References
+----------
+
+   Chambers, J.M., W.S. Cleveland, B. Kleiner and P.A. Tukey (1983)
+        Graphical Methods for Data Analysis. Wadsworth & Brooks/Cole
+        Chap. 2: 9-46.
+
+   Fox, J. (1990) Describing univariate distributions. In (Fox, J. &
+        J.S. Long, Eds.) "Modern Methods of Data Analysis". Sage
+        Chap. 2: 58-125.
+
+
+Author
+------
+
+Isaias H. Salgado-Ugarte,
+Facultad de Estudios Superiores Zaragoza, U.N.A.M.
+Biologia (Fax 52-5 773-1183)
+E-mail: isalgado@@servidor.unam.mx
+
+Also see
+--------
+
+    STB: snp6 (STB-16)
+On-line: ^help^ for ^boxdetr2^, ^cosdetra^, ^kernsim^, ^kernepa^, ^kerngaus^, 
+         ^adgakern^, ^adgaker2^, ^dentrace^

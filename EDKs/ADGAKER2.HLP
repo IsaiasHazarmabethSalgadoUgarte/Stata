@@ -1,0 +1,74 @@
+Adaptive Gaussian kernel density estimation (simplified)        [STB-16: snp6]
+--------------------------------------------------------
+
+         ^adgaker2^ varname halfwidth density midpt
+
+Description
+-----------
+
+^adgaker2^ estimates the density of "varname" using the adaptive Gaussian 
+kernel described in Fox (1990) modified from Silverman (1986).  "halfwidth"
+is a constant that specifies the width of the density window around each
+point.  "density" is a new variable that contains the density estimate on 
+output.  ^adgaker2^ estimates densities using a Gaussian kernel with fixed 
+window, then uses these estimates to determine local weights inversely 
+proportional to the preliminary density estimate.  These local weights are 
+used to adjust the window width so that it is narrower at high densities 
+(retaining detail) and wider where density is low (eliminating noise).
+To speed program execution, the density at the second step is estimated 
+only at 50 equally spaced points.
+
+As with the fixed window kernels the "smoothness" of the result can be 
+regulated by changing the width of the interval (i.e. varying 'h'). Wide 
+intervals produce smooth results; narrow intervals will result in noiser 
+density values.
+
+WARNING: Because the adaptive procedure requires the calculation of a 
+preliminary density estimation and individual local weights, the time 
+required to complete the task is proportional to _N.  Please be patient. 
+
+Example
+-------
+
+  . ^adgaker2 infmorat 20 adensity midpt^
+
+After some time (depending on the number of observations) the results are
+placed in the new variable ^adensity^. 
+
+  . ^list midpt adensity in 1/50^
+
+the values of the 50 midpoints and their corresponding estimated density 
+appear on screen.
+
+  . ^graph adensity midpt if _n<=50, xlab ylab c(s) s(o)^
+ 
+The graphic with the density estimates and midpoints ("smoothed" histogram) 
+will appear on screen. 
+
+
+Authors
+-------
+
+Isaias H. Salgado-Ugarte, Makoto Shimizu and Toru Taniuchi, 
+University of Tokyo, Faculty of Agriculture,
+Dept. of Fisheries (Fax 81-3-3812-0529)
+
+References
+----------
+
+   Chambers, J.M., W.S. Cleveland, B. Kleiner and P.A. Tukey (1983)
+        Graphical Methods for Data Analysis. Wadsworth & Brooks/Cole
+        Chap. 2: 9-46.
+   Silverman, B.W. (1986) Density Estimation for Statistics and Data 
+	Analysis. Chapman and Hall.
+   Fox, J. (1990) Describing univariate distributions. In (Fox, J. &
+        J.S. Long, Eds.) "Modern Methods of Data Analysis". Sage
+        Chap. 2: 58-125.
+
+
+Also see
+--------
+
+    STB: snp6 (STB-16); snp6.1 (STB-X)
+On-line: ^help^ for ^boxdetra^, ^boxdetr2^, ^cosdetra^, ^kernsim^, ^kernepa^,
+         ^kerngaus^, ^adgakern^

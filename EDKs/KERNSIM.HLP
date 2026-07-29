@@ -1,0 +1,70 @@
+Kernel density estimation (rectangular weight function)         [STB-16: snp6]
+-------------------------------------------------------
+
+         ^kernsim^ varname halfwidth density midpt
+
+Description
+-----------
+
+^kernsim^ estimates the density of "varname" using a rectangular weight 
+function as described in Fox, (1990).  Following a suggestion of 
+Chambers et. al. (1983), the density is estimated at 50 equally spaced points 
+in the range of "varname".  "halfwidth" is a constant that specifies the
+width of the density window around each point.  "density" is a new variable
+that contains the density estimate on output.  "midpt" is a new variable 
+that contains the midpoints of the 50 bins within which the density is
+calculated.  The data set is assumed to be sorted in the order of "varname".
+
+This procedure can be regarded as a descriptive smoother of histograms.
+Indeed this simple density estimator is like a histogram using bins of the
+specified width (2*h) but no fixed origin; the bin's windows run along the 
+series with each observation at its midpoint allowing overlap.
+The "smoothness" of the result can be regulated by changing the width of
+the interval. Wide intervals produce smooth results; narrow intervals
+result in noiser density values.
+
+Example
+-------
+
+  . ^kernsim infmorat 20 density midpt^
+
+After some time (depending on the number of observations) the results are
+placed in the new variable ^density^. 
+
+  . ^list midpt density^ in 1/50
+
+lists the values of the 50 midpoints and the estimated density at each point.
+
+  . ^graph density midpt if _n<=50, c(l) s(p)^
+
+displays a graph of the density estimate.
+
+
+References
+----------
+
+   Chambers, J.M., W.S. Cleveland, B. Kleiner and P.A. Tukey (1983)
+        Graphical Methods for Data Analysis. Wadsworth & Brooks/Cole
+        Chap. 2: 9-46.
+   Silverman, B.W. (1986) Density Estimation for Statistics and Data 
+        Analysis. Chapman and Hall.
+   Fox, J. (1990) Describing univariate distributions. In (Fox, J. &
+        J.S. Long, Eds.) "Modern Methods of Data Analysis". Sage
+        Chap. 2: 58-125.
+
+
+Authors
+-------
+
+Isaias H. Salgado-Ugarte, Makoto Shimizu and Toru Taniuchi
+University of Tokyo, Faculty of Agriculture,
+Dept. of Fisheries (Fax 81-3-3812-0529)
+
+
+Also see
+--------
+
+    STB: snp6 (STB-16)
+On-line: ^help^ for ^boxdetra^, ^boxdetr2^, ^cosdetra^, ^kernepa^, ^kerngaus^, 
+         ^adgakern^, ^adgaker2^
+

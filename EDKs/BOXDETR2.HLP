@@ -1,0 +1,69 @@
+Density trace (boxcar weight function)                          [STB-16: snp6]
+--------------------------------------
+
+         ^boxdetr2^ varname width dtrace midpt
+
+Description
+-----------
+^boxdetra^ calculates the density trace of "varname" using the boxcar weight 
+function described in Chambers et. al. (1983).  "width" is a constant that
+specifies the width of the density window around each point.  "dtrace" is 
+a new variable that contains the density trace on output.  "midpt" is a new
+variable that contains the midpoints of the 50 bins within which the 
+density is calculated.  The data set is assumed to be sorted in the order 
+of "varname".
+
+This procedure can be regarded as a descriptive smoother of histograms.
+Indeed this simple density estimator is like a histogram using bins of the
+specified width but no fixed origin; the bin's windows run along the 
+series with each observation at its midpoint allowing overlap.
+The "smoothness" of the result can be regulated by changing the width of
+the interval. Wide intervals produce smooth results; narrow intervals
+result in noiser density values.
+
+WARNING: Even though ^boxdetr2^ considers only 50 equally spaced bins, 
+the computing time required is proportional to the number of observations. 
+Please be patient.
+
+Example
+-------
+
+  . ^boxdetr2 ozone 75 dtrace midpt^
+
+After some time (depending on the number of observations) the results are
+placed in the new variable ^dtrace^. 
+
+  . ^list midpt dtrace^ in 1/50
+
+lists the values of the data variable and the density trace estimation 
+results.
+
+  . ^graph dtrace midpt if _n<51^, xlab ylab c(l) s(p)
+
+displays a graph of the density trace.
+
+
+References
+----------
+
+   Chambers, J.M., W.S. Cleveland, B. Kleiner and P.A. Tukey (1983)
+        Graphical Methods for Data Analysis. Wadsworth & Brooks/Cole
+        Chap. 2: 9-46.
+   Fox, J. (1990) Describing univariate distributions. In (Fox, J. &
+        J.S. Long, Eds.) "Modern Methods of Data Analysis". Sage
+        Chap. 2: 58-125.
+
+
+Authors
+-------
+
+Isaias H. Salgado-Ugarte, Makoto Shimizu and Toru Taniuchi,
+University of Tokyo, Faculty of Agriculture,
+Dept. of Fisheries (Fax 81-3-3812-0529)
+
+Also see
+--------
+
+    STB: snp6 (STB-16)
+On-line: ^help^ for ^boxdetra^, ^cosdetra^, ^kernsim^, ^kernepa^, ^kerngaus^, 
+         ^adgakern^, ^adgaker2^

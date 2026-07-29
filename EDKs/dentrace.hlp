@@ -1,0 +1,94 @@
+.-
+help for ^dentrace^                                           [STB-16: snp6]
+.-
+
+Density trace (boxcar weight function) updated               
+----------------------------------------------
+
+         ^dentrace^ varname [^if^ exp] [^in^ range],
+                 ^h^val^(^#^)^ ^f^code^(^#^)^ [^np^oints^(^#^)^ 
+                 ^g^en^(^denvar^ ^midvar^)^ ^nog^raph graph_options]
+
+Description
+-----------
+This program calculates the density trace of "varname" using two weight
+functions (boxcar and cosine) as described in Chambers et. al. (1983)
+and graph the results.  
+
+
+Options
+-------
+
+^h^val^(^#^)^ is a constant that specifies the width of the density window 
+around each point.  
+
+^f^code^(^#^)^ is the code for the weigth function: 1 boxcar; 2 cosine
+
+^np^oints^(^#^)^ permits to especify the number of points to be used for 
+estimation
+
+^g^en permits to generate two new variables: "denvar" with the density 
+values and "midval" with the variable that contains the points used for
+calculation.
+
+^nog^raph suppresses the graph drawing.
+
+graph_options are any of the options allowed with ^graph, twoway^.
+
+Remarks
+-------
+
+^h^val and ^f^code are not optional. If the user does not provide
+them, the program halts and displays an error message on screen.
+
+This procedure can be regarded as a descriptive smoother of histograms.
+Indeed this simple density estimator is like a histogram using bins of the
+specified width but no fixed origin; the bin's windows run along the 
+series with each observation at its midpoint allowing overlap.
+The "smoothness" of the result can be regulated by changing the width of
+the interval. Wide intervals produce smooth results; narrow intervals
+result in noiser density values.
+
+WARNING: Even though ^dentrace^ considers by default only 50 equally 
+spaced bins, the computing time required is proportional to the number 
+of observations. Please be patient.
+
+Example
+-------
+
+  . ^dentrace ozone, h(75) f(1) gen(dtrace midpt)^
+
+After some time (depending on the number of observations) the results are
+displayed as a density graph and two variables with the results "dtrace"
+and "midpoint" are generated. 
+
+It is possible to draw the graphic with the generated results by typing:
+
+  . ^graph dtrace midpt^, xlab ylab c(l) s(p)
+
+
+References
+----------
+
+   Chambers, J.M., W.S. Cleveland, B. Kleiner and P.A. Tukey (1983)
+        Graphical Methods for Data Analysis. Wadsworth & Brooks/Cole
+        Chap. 2: 9-46.
+   Fox, J. (1990) Describing univariate distributions. In (Fox, J. &
+        J.S. Long, Eds.) "Modern Methods of Data Analysis". Sage
+        Chap. 2: 58-125.
+
+
+Author
+------
+
+Isaias H. Salgado-Ugarte,
+Facultad de Estudios Superiores Zaragoza, U.N.A.M.
+Biologia (Fax 52-5 773-1183)
+E-mail: isalgado@@servidor.unam.mx
+
+Also see
+--------
+
+    STB: snp6 (STB-16)
+On-line: ^help^ for ^boxdetra^, ^cosdetra^, ^kernsim^, ^kernepa^, ^kerngaus^, 
+         ^boxdent^, ^adgakern^, ^adgaker2^

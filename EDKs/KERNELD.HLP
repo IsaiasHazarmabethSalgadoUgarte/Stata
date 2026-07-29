@@ -1,0 +1,126 @@
+Kernel density estimation (revised)         [STB-16: snp6]; [STB-X: snp6.x]
+-----------------------------------
+
+   ^kerneld^  varname [^if^ exp] [^in^ range],
+		^b^width^(^#^)^ ^k^ercode^(^#^)^ ^np^oint^(^#^)^
+		[^g^en^(^densivar gridvar^)^ ^nog^raph graph_options]
+
+
+
+
+Description
+-----------
+
+This program calculates the density of ^varname^ using univariate kernel 
+estimators as described in Silverman (1986), Fox(1990), Haerdle (1991), and 
+Scott (1992). As the default result this command draws the graph of the density
+estimations over the grid points used for calculations connected by a line and 
+using the symbol ".".
+
+Options
+-------
+
+^b^width^(^#^)^ specifies the smoothing parameter (bandwidth or halfwidth) of 
+     the kernel. This parameter define the width of the weight function window
+     around each grid point. The "smoothness" of the resulting estimate can be
+     regulated by changing this parameter: wide intervals produce smooth 
+     results; narrow intervals result in noiser density values.
+
+^k^ercode^(^#^)^ specifies the weight function (kernel) to calculate the density
+     according to the following numerical codes:
+
+	1 = Uniform
+ 	2 = Triangle 
+ 	3 = Epanechnikov
+ 	4 = Quartic (Biweight)
+ 	5 = Triweight
+ 	6 = Gaussian
+ 	7 = Cosinus
+
+Except for the Gaussian kernel all the functions are supported on [-1,1].
+
+^np^oint^(^#^)^ specifies the number of equally spaced points (grid) in the 
+     range of ^varname^ used for the density estimation, as suggested by several
+     authors Chambers et. al. 1983; Silverman, 1986; Fox, 1990; Haerdle, 1991;
+     Scott, 1992) in order to simplify the number of aritmetical operations.  
+     Take into account that, as	the number of points increases, the time for 
+     calculation increases too. On the other hand, if the number of points is
+     less than 50, the approximation may be too rough to be useful.
+
+^b^width, ^k^ercode, and ^np^point are not optional, the user must input their
+     values. If	not, the program halts and displays an error message on screen.
+
+^g^en^(^densivar gridvar^)^ permits to create two variables containing 
+     respectively the estimated densities and the corresponding grid points 
+     used for calculation.
+
+^nog^raph suppresses the graph drawing
+
+graph_options are any of the options allowed with ^graph, twoway^.
+
+
+This procedure can be regarded as a descriptive smoother of histograms besides 
+a nonparametric density estimator. The density estimator using a triangular
+weight function is like a histogram using bins with the specified width but no
+fixed origin; the bin's windows run along the series with each observation at
+its midpoint allowing overlapping. The other kernels, besides having no fixed
+origin use symmetric "smooth" windows.
+
+
+Example
+-------
+
+  . ^kerneld snow, bwidth(10) kercode(4) npoint(50)^
+
+Will display the density estimation of ^snow^ using a smoothing parameter of 10,
+the Quartic (biweight) kernel and 50 grid points.
+
+  . ^kerneld snow, b(10) k(2) np(100) gen(dtri10 gtri10) nog^
+
+Will calculate the density estimate for ^snow^ using a bandwidth of 10, a 
+triangular weight function, 100 gridpoints and will create two variables with
+the resulting densities and gridpoints without any graphical display.
+
+
+
+References
+----------
+
+   Chambers, J.M., W.S. Cleveland, B. Kleiner and P.A. Tukey (1983)
+        Graphical Methods for Data Analysis. Wadsworth & Brooks/Cole
+        Chapter 2: 9-46.
+   Fox, J. (1990) Describing univariate distributions. In (Fox, J. &
+        J.S. Long, Eds.) "Modern Methods of Data Analysis". Sage
+        Chapter 2: 58-125.
+   Haerdle, W. (1991) Smoothing Techniques with Implementation in S.
+        Springer-Verlag Chapter 2: 43-84.
+   Salgado-Ugarte, I.H., M. Shimizu, and T. Taniuchi (1993) snp6: Exploring
+        the shape of univariate data using kernel density estimators. Stata 
+        Technical Bulletin 16: 8-19.
+   Salgado-Ugarte, I.H., M. Shimizu, and T. Taniuchi (1995) snp6.1: ASH,
+        WARPing, and kernel density estimation for univariate data. Stata
+        Technical Bulletin XX: xx-xx.
+   Salgado-Ugarte, I.H., M. Shimizu, and T. Taniuchi (199x) snp6.2: Univariate
+        kernel density estimators (Update). Stata Technical Bulletin XX: xx-xx.
+   Scott, D.W. (1992) Multivariate Density Estimation: Theory, Practice,
+        and Visualization. John Wiley Chapter 6: 125-143.
+   Silverman, B.W. (1986) Density Estimation for Statistics and Data 
+        Analysis. Chapman and Hall.
+
+
+Authors
+-------
+
+Isaias H. Salgado-Ugarte, Makoto Shimizu and Toru Taniuchi
+University of Tokyo, Faculty of Agriculture,
+Department of Fisheries, Yayoi 1-1-1, Bunkyo-ku
+Tokyo 113, Japan.
+(Fax 81-3-3812-0529)
+e-mail: isalgado@@tansei.cc.u-tokyo.ac.jp
+
+
+Also see
+--------
+
+    STB: snp6 (STB-16); snp6.1 (STB-X); snp6.2 (STB-X2)
+On-line: ^help^ for @adgaker@, @adgaker2@, @warpden@
